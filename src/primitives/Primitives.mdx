@@ -1,0 +1,37 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Primitives/Overview" />
+
+# Primitives Overview
+
+Primitives are the lowest-level, atomic React building blocks. They bind design token foundations and normalized adapters to the UI without encoding product-specific workflows or business logic.
+
+## Core Purpose
+
+- **Token Binding**: Directly translates design system tokens (`spacing`, `radius`, `color`) into React style properties or Tailwind utility bindings.
+- **Visual Stability**: Establishes base controls (e.g. `Box`, `Stack`, `Grid`, `Text`, `Button`, `Input`) that form the foundation for all complex components.
+- **Framework-Light**: Stays small, highly performant, and reusable across completely different products.
+
+## Target Structure
+
+```text
+src/primitives/
+├── Primitives.mdx        # This overview
+├── index.ts              # Barrel exports
+│
+├── box/                  # Semantic bounding box container
+├── stack/                # Vertical/Horizontal layout flexbox wrapper
+├── grid/                 # CSS grid control
+├── surface/              # Material/Background paper sheets
+├── text/                 # SF Pro/Sans system typography scale
+├── icon/                 # Standardized vector symbols wrapper
+├── button/               # Clickable tap triggers
+└── input/                # Form fields and raw capture elements
+```
+
+## Primitive Rules
+
+- **Zero Business Logic**: Primitives must never depend on product endpoints, network state, or feature mocks.
+- **Zero Platform Branching**: Primitives should generally remain environment-agnostic (relying on layout engines or environments profile parameters passed down, not inline UA checks).
+- **Extensible Props**: Primitives should expose raw HTML element props via TypeScript extensions.
+- **Prefer Primitives**: Before introducing a high-level composite component, ensure it cannot be created cleanly by nesting primitive layout elements.

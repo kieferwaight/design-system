@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Patterns/Overview" />
+
+# Patterns Overview
+
+Patterns are reusable, adaptive layout systems and interaction architectures. They are larger than individual components but remain entirely product-neutral, adjusting how elements are presented based on the device, screen size, or viewport.
+
+## Core Purpose
+
+- **Adaptive Reflow**: Defines responsive grid, sidebar, and detail view rules across different device form-factors (iOS mobile, iPad, and desktop browser).
+- **Composite Interaction**: Coordinates complex, multi-pane flows (e.g. Navigation Stack push/pop transitions, inspector drawers, split-view pane sizing).
+- **Environment Integration**: Direct consumers of `EnvironmentProfile` properties, automatically rendering mobile-first shells or multi-column layouts based on resolved capabilities.
+
+## Target Structure
+
+```text
+src/patterns/
+├── Patterns.mdx          # This overview
+├── index.ts              # Barrel exports
+│
+├── navigation-stack/     # Mobile slide-over stack flows
+├── split-view/           # Adjustable multi-pane layout (2 or 3 columns)
+├── sidebar-layout/       # Persistent or collapsible left/right panels
+├── inspector-panel/      # Contextual right-hand detail drawers
+└── adaptive-shell/       # Overall viewport shell coordinating responsive bars
+```
+
+## Pattern Rules
+
+- **Responsive & Liquid**: All patterns must degrade gracefully. A split-view on desktop should automatically collapse to a push-navigation stack on iOS mobile screens.
+- **Product Agnostic**: While complex, a pattern must not bake in specific project endpoints or metadata schemas.
+- **No Mock Workflows**: Leave workflow-level data composition to the application shell or `examples/storybook/views/`.

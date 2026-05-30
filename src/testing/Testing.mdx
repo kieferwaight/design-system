@@ -1,0 +1,31 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Testing/Overview" />
+
+# Testing & QA Overview
+
+The Testing directory houses shared testing utilities, rendering helpers, visual comparison fixtures, and architectural boundary checks for the design system.
+
+## Core Purpose
+
+- **Test Uniformity**: Provides a unified `render` wrapper incorporating standard theme, accent, and environment decorators.
+- **Mock Isolation**: Defines reusable scenario fixtures that simulate network, device capability profiles, and platform constraints.
+- **Architectural Boundary Enforcement**: Runs automated static graph analysis (e.g. via `madge` or Vitest) to enforce architectural layering and prevent illegal import dependencies.
+
+## Target Structure
+
+```text
+src/testing/
+├── Testing.mdx           # This overview
+├── index.ts              # Barrel exports
+├── render.tsx            # Theme/accent/environment testing render wrapper
+├── storybook.ts          # Play/Interaction test utilities
+├── fixtures.ts           # Unified mock configurations and models
+└── architecture.test.ts  # Architectural import boundary checks
+```
+
+## Testing Rules
+
+- **Zero App Workflows**: Reusable mock data shaped like backend schemas belongs in `examples/storybook/mocks/` rather than the package source.
+- **Import Rules**: Architecture tests must actively prevent production package imports from referencing `archive/`, `examples/`, or `dist/` directories.
+- **Framework Light**: Test rendering adapters must stay highly decoupled from the application logic to prevent test-suite brittle failures on minor updates.

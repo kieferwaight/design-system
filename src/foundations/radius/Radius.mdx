@@ -1,0 +1,74 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { LAYER_RADII, GLYPH_SIZE_PX, radiusGlyph, glyphRadius } from "./radius";
+
+<Meta title="Foundations/Radius/Overview" />
+
+# Radius Foundation
+
+The design system maintains two distinct, deliberately separate corner-radius systems to handle different visual hierarchies:
+
+1. **Layer-Based Radii** organize concentric **nested containers**.
+2. **Glyph Radii** pair a **single component's** corners to its physical size so it reads as a rounded square at any scale.
+
+---
+
+## 1. Layer-Based Radii (Nested Containers)
+
+When containers are nested inside one another, utilizing a single, constant corner radius breaks visual concentricity (causing the corners to "pinch" or look awkward). 
+
+To solve this, we enforce the **concentricity rule**:
+$$\text{inner-radius} = \text{outer-radius} - \text{gap}$$
+
+Our layer scale assumes the baseline `--space-1` gap, descending from the outermost container (e.g. desktop window or iOS screen) to the innermost element:
+
+<table>
+  <thead>
+    <tr>
+      <th>CSS Variable</th>
+      <th>Default Value</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Object.entries(LAYER_RADII).map(([key, item]) => (
+      <tr key={key}>
+        <td><code>{item.token}</code></td>
+        <td><code>{item.valuePx}px</code></td>
+        <td>{item.description}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+---
+
+## 2. Glyph Radii (Size-Paired Corner Scale)
+
+Visual atoms (such as Swatches, Avatars, or Chips) read as rounded squares at any scale. If a constant corner radius is used, small boxes round too much (turning into circles) while large boxes don't round enough (turning into sharp squares).
+
+Glyph corner radii are paired directly to the box's size via a dedicated ladder:
+
+<table>
+  <thead>
+    <tr>
+      <th>Glyph Size</th>
+      <th>Box Size</th>
+      <th>CSS Variable</th>
+      <th>Calculated Radius</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Object.keys(GLYPH_SIZE_PX).map((size) => (
+      <tr key={size}>
+        <td><code>{size}</code></td>
+        <td><code>{GLYPH_SIZE_PX[size]}px</code></td>
+        <td><code>{radiusGlyph[size]}</code></td>
+        <td><code>{glyphRadius(GLYPH_SIZE_PX[size])}px</code></td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+### Dynamic Interpolation
+
+For arbitrary size values between or beyond the defined buckets, the `glyphRadius(sizePx)` utility interpolates these anchors cleanly to ensure perfect optical proportions at any custom scale.

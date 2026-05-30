@@ -1,0 +1,42 @@
+import { Meta, Description, Canvas, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as Stories from "./Surface.stories";
+import surfaceSrc from "./Surface.tsx?raw";
+
+<Meta of={Stories} />
+
+# Surface Primitive
+
+<Description of={Stories} />
+
+The `Surface` primitive is an altitudinal layout sheet panel extending `Box`. It integrates physical layout layers and glassmorphic translucent materials with spacing, border-radius, and z-axis shadow configurations.
+
+---
+
+## Live Playground
+
+<Canvas of={Stories.Default} />
+<Controls of={Stories.Default} />
+
+---
+
+## Key Scenarios
+
+### 1. Altitudinal Concentric Nesting
+
+When nesting containers, keeping card properties aligned and concentric is critical. By declaring the `level` property (0..6), the `Surface` automatically resolves outer-to-inner corner radius limits (`layer-0` to `layer-6`) and pairs them with calibrated background highlights and shadow layers:
+
+<Canvas of={Stories.AltitudinalTiers} />
+
+### 2. Premium Glassmorphic Materials
+
+Employs native Apple-style translucent overlay blurs using GPU-accelerated backdrop-filters (`ultra-thin` up to `thick`), creating depth layers above complex canvases:
+
+<Canvas of={Stories.GlassMaterials} />
+
+---
+
+## Source of Truth
+
+The complete implementation code for `Surface`:
+
+<Source code={surfaceSrc} language="tsx" dark />

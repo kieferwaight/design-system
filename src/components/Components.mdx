@@ -1,0 +1,23 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Overview" />
+
+# Components
+
+Atomic, reusable UI built on the Foundations + **React Aria** (behavior) + **Motion**
+(animation). The primary focus right now is the **core atomic pieces**.
+
+These are being rebuilt from scratch for the Design Kit — the original prototypes live
+under **Archive/Primitives** and **Archive/Rows** and are mined for parts.
+
+## Glyph atoms
+
+The first family shares one base — a sized box on the shared **glyph** size + radius
+system (`xs 16 · sm 24 · md 36 · lg 54 · xl 80`, square corners via `glyphRadius`):
+
+- **Shape** — the bare base: a `square` or `circle` at a glyph size. Carries only geometry.
+- **Swatch** — a Shape filled with a color (the color model's display atom).
+- **Avatar** — a Shape filled with an image, or initials over a name-hashed tint.
+
+Because Swatch and Avatar are the same Shape, an `md` swatch and an `md` avatar are the
+same 36px box with the same rounding.

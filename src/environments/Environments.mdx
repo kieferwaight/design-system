@@ -1,0 +1,105 @@
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+import * as Stories from "./EnvironmentEngine.stories";
+
+<Meta title="Environments/Overview" />
+
+# Environments Engine
+
+The Environments Engine resolves raw runtime facts (device classification, viewport dimensions, launch context, and capabilities) into a single, predictable, immutable **decision object**: the `EnvironmentProfile`.
+
+UI components and layouts consume this profile to organize and adapt themselves. They never query `matchMedia`, user-agents, or browser APIs directly.
+
+---
+
+## Live Engine Console
+
+The console below demonstrates the live, resolved `EnvironmentProfile` computed by the engine in real-time. Resize the viewport or toggle device emulation to see the parameters update instantly.
+
+<Canvas of={Stories.Console} />
+
+---
+
+## Folder Layout
+
+The engine sits in `src/environments/`, structured into modular sensors, profiles, and helpers:
+
+```text
+src/environments/
+├── Environments.mdx       # This narrative documentation
+├── index.ts               # Core barrel exports
+├── environment-engine.ts  # Pure resolveEnvironment(SensorSnapshot) mapper
+├── environment.types.ts   # The EnvironmentProfile interface contracts
+├── EnvironmentProvider.tsx# Aggregates sensors into one coalesced RAF store
+├── use-environment.ts     # useEnvironment() and slice hooks
+│
+├── sensors/               # Reactive browser event subscriptions
+│   ├── sensor.types.ts    # Sensor interface
+│   ├── device-sensor.ts   # Breakpoint orientation listener
+│   ├── launch-sensor.ts   # display-mode monitor
+│   ├── input-sensor.ts    # Coarse/fine pointer detector
+│   ├── safe-area-sensor.ts# Computed safe-area probe
+│   ├── keyboard-sensor.ts # Soft keyboard virtual viewport sensor
+│   └── capability-sensor.ts# Browser API probes
+│
+├── profiles/              # Static resolution matrix values
+│   ├── ios.ts
+│   ├── ipad.ts
+│   └── desktop.ts
+│
+└── pwa/                   # Cache, manifest, and service-worker lifecycle stubs
+```
+
+---
+
+## Interface Contract
+
+The resolved `EnvironmentProfile` contains five flat decision sectors:
+
+* **`device`**: Platform classification (`"ios" | "ipad" | "desktop"`).
+* **`viewport`**: Pure responsive width classification.
+* **`input`**: Dynamic pointer and hover states mapping to `primary: "touch" | "hybrid" | "keyboard-pointer"`.
+* **`layout`**: Grid, stack, panel, list, and inspector width/visibility metrics.
+* **`navigation`**: Navigation transition slides (`"ios-slide"`), push stacks, and app-driven gesture owner indicators.
+* **`surface`**: Physical safe-area pixel counts and soft virtual keyboard offsets.
+* **`capabilities`**: Browser push, offline caching, notifications, and manifest APIs.
+
+---
+
+## Consumption API
+
+To use the Environment Engine, wrap your application tree in the provider:
+
+```tsx
+import { EnvironmentProvider } from "@internal/design-system";
+
+export function App() {
+  return (
+    <EnvironmentProvider serverDefault="desktop">
+      <YourAppLayout />
+    </EnvironmentProvider>
+  );
+}
+```
+
+Then consume resolved values anywhere in your components using the clean, reactive hooks:
+
+```tsx
+import { useEnvironment, useSafeArea, useKeyboardInset } from "@internal/design-system";
+
+export function FloatingToolbar() {
+  const { layout } = useEnvironment();
+  const safeArea = useSafeArea();
+  const keyboard = useKeyboardInset();
+
+  return (
+    <div
+      style={{
+        paddingBottom: keyboard.visible ? keyboard.height : safeArea.bottom,
+        display: layout.mode === "single-screen-stack" ? "flex" : "none"
+      }}
+    >
+      <YourControls />
+    </div>
+  );
+}
+```

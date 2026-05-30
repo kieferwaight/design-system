@@ -1,0 +1,18 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Overview" />
+
+# Foundations
+
+The token primitives every component composes from. Eight core domains:
+
+- **Color** — core + accent colors, swatches, palettes, and prefers-contrast configurations.
+- **Typography** — the HIG-aligned type ramp: font, weight, size, Dynamic Type categories, and pairings.
+- **Spacing** — the source-defined modular spacing scale.
+- **Radius** — concentric container layers and size-paired glyph corner scaling.
+- **Elevation** — altitudinal shadows (z-axis depth) and glass backdrop blur materials.
+- **Icon** — standard icon sizing tokens (xs to xl) aligned with structural layout atoms.
+- **Material** — translucent, adaptive system fills of varying thickness (thin to thick).
+- **Device** — static device breakpoints and query constraints (ios, ipad, desktop).
+
+Tokens live in the generated CSS/type files (mirroring Tier 1 primitives and Tier 2 semantic variables). Components reference the semantic tier to support dark-appearance and platform scaling automatically.

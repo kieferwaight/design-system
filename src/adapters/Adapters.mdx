@@ -1,0 +1,51 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Adapters/Overview" />
+
+# Adapters Overview
+
+Adapters normalize external systems before they enter the design system. They allow the package to consume provider-specific libraries without leaking those provider APIs into foundations, primitives, or components.
+
+## Core Purpose
+
+- **Normalization**: Translates third-party configurations (e.g. Catppuccin, Rosé Pine palette packages) into standard domain models (e.g. `Palette`, `AnsiPalette`).
+- **Encapsulation**: Keeps external APIs (e.g. `lucide-react`, `@rose-pine/palette`, `framer-motion`) isolated.
+- **Provider Swapping**: Allows backend/upstream dependencies to be replaced or modified without affecting the downstream UI components.
+
+## Target Structure
+
+```text
+src/adapters/
+├── Adapters.mdx          # This overview
+├── index.ts              # Barrel exports
+│
+├── colors/               # Color adapters
+│   ├── catppuccin/       # Catppuccin normalization
+│   └── rose-pine/        # Rosé Pine normalization
+│
+├── icons/                # Icon system adapters
+│   └── lucide/
+│
+└── motion/               # Animation and gesture adapters
+    ├── framer-motion/
+    └── gesture/
+```
+
+## Folder Contract
+
+Each specific adapter must follow this pattern:
+
+```text
+<provider>/
+├── <Provider>.mdx        # Usage documentation and story integration
+├── <provider>.ts         # Core normalization/mapping logic
+├── <provider>.types.ts   # Normalized type definitions
+├── <provider>.test.ts    # Boundary/normalization unit tests
+└── index.ts              # Export interface
+```
+
+## Architectural Boundaries
+
+- Adapters **may** depend on external libraries.
+- Foundations **may** consume normalized adapter output but **must not** import raw provider-specific packages.
+- Components and primitives **must not** import raw provider packages directly when an adapter exists.

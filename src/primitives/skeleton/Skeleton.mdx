@@ -1,0 +1,42 @@
+import { Meta, Description, Canvas, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as Stories from "./Skeleton.stories";
+import skeletonSrc from "./Skeleton.tsx?raw";
+
+<Meta of={Stories} />
+
+# Skeleton Primitive
+
+<Description of={Stories} />
+
+The `Skeleton` primitive provides structural placeholder lines or container grids while data fetches in the background. It conforms 100% to our standard concentric corner-radius tokens.
+
+---
+
+## Live Playground
+
+<Canvas of={Stories.Default} />
+<Controls of={Stories.Default} />
+
+---
+
+## Key Scenarios
+
+### 1. Shape Variations
+
+Includes rectangular bounding blocks, circular avatar anchors, and horizontal line representations matching typical text leading ratios:
+
+<Canvas of={Stories.Shapes} />
+
+### 2. Layout Composition Mock-Ups
+
+Developers can nest multiple skeleton units together with layout Stack and Grid primitives to mockup complex card elements, keeping layout spacing completely identical before and after load:
+
+<Canvas of={Stories.skeletalComposition} />
+
+---
+
+## Source of Truth
+
+The complete implementation code for `Skeleton`:
+
+<Source code={skeletonSrc} language="tsx" dark />

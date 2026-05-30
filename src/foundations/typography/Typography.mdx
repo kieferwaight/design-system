@@ -1,0 +1,28 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Typography/Overview" />
+
+# Typography
+
+Constrained to the system font stack (`-apple-system` / SF Pro), since SF can't
+be web-embedded — so we ride the platform font and degrade gracefully elsewhere.
+
+Classifications (each has its own page):
+
+- **Font** — the platform system font and mono stacks, plus supported variants.
+- **Weight** — the recommended UI weights and the lighter weights to avoid for small text.
+- **Size** — the rem-based iOS type ramp.
+- **Text Styles** — the [HIG text styles](https://developer.apple.com/design/human-interface-guidelines/typography),
+  each binding a size token to Apple's default weight, **emphasized** weight, and leading.
+- **Dynamic Type** — the iOS accessibility scale across the source-defined content-size
+  categories. The default category is what the live tokens encode.
+- **macOS** — the desktop platform's built-in ramp with its own default and emphasized weights.
+- **Variations** — leading, tracking, italic, and small-caps.
+- **Numerals & Ligatures** — tabular vs proportional numerals; standard ligatures.
+- **Pairings** — sanctioned title/body/mono compositions, shown in context.
+
+The live tokens in `src/design/primitives.css` encode the default iOS ramp. The full Apple
+data model — emphasized weights, Dynamic Type categories, the default category, and the macOS
+ramp — lives in `src/foundations/typography/typography.ts` and
+`src/foundations/typography/typography.types.ts`. The classification stories render those
+source objects directly.

@@ -1,0 +1,34 @@
+import { Meta, Source } from "@storybook/addon-docs/blocks";
+import elevationSrc from "./elevation.ts?raw";
+
+<Meta title="Foundations/Elevation/Overview" />
+
+# Elevation Foundation
+
+Elevation represents altitude on the vertical z-axis. The design system uses two physical systems to convey elevation:
+
+1. **Ambient Shadows** represent physical separation from the underlying surface.
+2. **Backdrop Blurs** establish materials and glass translucency for layered UI sheets, overlays, and headers.
+
+---
+
+## 1. Altitudinal Shadows (z-axis depth)
+
+Shadows are calibrated to deepen and spread wider as the z-axis separation increases. They utilize `light-dark()` CSS syntax, becoming softer and lower-contrast in light mode, and deeper/higher-opacity in dark mode to preserve structural depth.
+
+The calibrated light and dark shadow values live with their CSS variable references in the source module below.
+
+---
+
+## 2. Backdrop Blurs (Glass/Material Transparency)
+
+Backdrop filters allow elements to appear as semi-translucent glass, allowing lower layers to show through while maintaining text legibility. 
+
+> [!WARNING]
+> Backdrop blurs are visually rich but computationally expensive. Every active blur layer requires the GPU to repaint during scrolling or animations. Use them selectively, prioritizing active modal sheets and static headers.
+
+The available blur tiers and their physical radii are source-defined so runtime rendering, animation calculations, and this documentation share one definition.
+
+## Source definitions
+
+<Source code={elevationSrc} language="tsx" dark />

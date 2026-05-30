@@ -1,0 +1,75 @@
+import { Meta, Description, Canvas, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as Stories from "./Input.stories";
+import inputSrc from "./Input.tsx?raw";
+import searchInputSrc from "./SearchInput.tsx?raw";
+import switchSrc from "./Switch.tsx?raw";
+import checkboxSrc from "./Checkbox.tsx?raw";
+
+<Meta of={Stories} />
+
+# Input Primitives
+
+<Description of={Stories} />
+
+The `Input` primitive suite represents highly-accessible, standard-calibrated controls (Text Inputs, iOS Search fields, Toggle Switches, and Checkboxes) built using React Aria Components and styled with design system tokens.
+
+---
+
+## Live Playground (Text Input)
+
+<Canvas of={Stories.Default} />
+<Controls of={Stories.Default} />
+
+---
+
+## Key Scenarios
+
+### 1. Form Text Fields & Areas
+
+Standard Text Fields support textareas (`multiline`), error messages, and descriptions, fully calibrated to input radius (`layer-5`) and spacing metrics:
+
+<Canvas of={Stories.FormTextFields} />
+
+### 2. iOS Magnifier Search Fields
+
+Custom Search Inputs feature inline magnifying glasses and Escape-to-clear buttons, with support for live result counters:
+
+<Canvas of={Stories.SearchInputs} />
+
+### 3. iOS-Style Toggle Switches
+
+Responsive Toggle Switches utilizing green success tracks, white thumbs, and sliding animations:
+
+<Canvas of={Stories.ToggleSwitches} />
+
+### 4. Custom Checkboxes
+
+Custom Checkboxes feature rounded squares, smooth scale-in check SVGs, and indeterminate fills:
+
+<Canvas of={Stories.CheckboxStates} />
+
+### 5. Settings Panel Composition
+
+Combines all input primitives with `Box` and `Stack` layout helpers to establish a cohesive settings overlay panel:
+
+<Canvas of={Stories.PwaSettingsForm} />
+
+---
+
+## Source of Truth
+
+### Base Input Component
+
+<Source code={inputSrc} language="tsx" dark />
+
+### iOS Search Field Component
+
+<Source code={searchInputSrc} language="tsx" dark />
+
+### iOS Toggle Switch Component
+
+<Source code={switchSrc} language="tsx" dark />
+
+### Custom Checkbox Component
+
+<Source code={checkboxSrc} language="tsx" dark />

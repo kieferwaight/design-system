@@ -1,0 +1,38 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Generated/Overview" />
+
+# Generated Artifacts Overview
+
+The Generated directory houses compiled assets, tokens, styles, and types emitted programmatically by development scripts. These files must remain completely reproducible and are not authored by hand.
+
+## Core Purpose
+
+- **Centralized Synchronization**: Derives CSS variables (`semantic.css`, `primitives.css`), JSON tokens, and TypeScript structures from the centralized JS/TS design system models (`src/foundations/`).
+- **Consistent Parity**: Maintains 1:1 parity between stylesheet rules used by compilers/Tailwind and TypeScript definitions used by developers and runtime helpers.
+- **Continuous Integration Checks**: Re-compiled during builds to verify that committed files have not diverged from foundation specifications.
+
+## Target Structure
+
+```text
+src/generated/
+├── Generated.mdx         # This overview
+├── index.ts              # Barrel exports
+│
+├── css/                  # Emitted stylesheets
+│   ├── primitives.css    # Tier 1 raw values
+│   ├── semantic.css      # Tier 2 dynamic aliases
+│   └── theme.css         # Tailwind bridge and inline directives
+│
+├── types/                # Generated TypeScript models
+│   ├── kinds.ts
+│   └── radius.ts
+│
+└── metadata/             # Token/swatch JSON schemas
+```
+
+## Generated Rules
+
+- **Do Not Edit**: Every file under this hierarchy must carry a bold `"DO NOT EDIT DIRECTLY"` warning header.
+- **Reproducible Pipelines**: The generation script must run without side effects, accepting pure input variables from the color/typography foundations and outputting clean, formatted files.
+- **Git Hygiene**: Committed artifacts must match output values produced on build servers to prevent diverging branch state.

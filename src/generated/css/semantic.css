@@ -1,0 +1,166 @@
+/* ============================================================
+   TIER 2 — SEMANTIC  (Apple ecosystem)
+   Meaning-based aliases. THIS is the only tier components touch.
+
+   Light/dark is resolved per-token with the CSS `light-dark()` function, which
+   keys off the `color-scheme` property. `theme.css` sets `color-scheme` from
+   `data-theme` (light / dark / unset→system), so:
+     - no `data-theme`  → follows the OS (prefers-color-scheme)
+     - data-theme=light → forced light
+     - data-theme=dark  → forced dark
+   One definition per token, both ends inside light-dark() — no duplicated
+   dark blocks. Apple's Dark Mode is the same idea: one dynamic color, two values.
+   https://developer.apple.com/design/human-interface-guidelines/dark-mode
+   ============================================================ */
+
+:root {
+  /* ---- System colors (dynamic; tintable accent set) ---- */
+  --sys-red: light-dark(var(--apple-red-light), var(--apple-red-dark));
+  --sys-orange: light-dark(var(--apple-orange-light), var(--apple-orange-dark));
+  --sys-yellow: light-dark(var(--apple-yellow-light), var(--apple-yellow-dark));
+  --sys-green: light-dark(var(--apple-green-light), var(--apple-green-dark));
+  --sys-mint: light-dark(var(--apple-mint-light), var(--apple-mint-dark));
+  --sys-teal: light-dark(var(--apple-teal-light), var(--apple-teal-dark));
+  --sys-cyan: light-dark(var(--apple-cyan-light), var(--apple-cyan-dark));
+  --sys-blue: light-dark(var(--apple-blue-light), var(--apple-blue-dark));
+  --sys-indigo: light-dark(var(--apple-indigo-light), var(--apple-indigo-dark));
+  --sys-purple: light-dark(var(--apple-purple-light), var(--apple-purple-dark));
+  --sys-pink: light-dark(var(--apple-pink-light), var(--apple-pink-dark));
+  --sys-brown: light-dark(var(--apple-brown-light), var(--apple-brown-dark));
+
+  /* ---- System grays (dynamic) ---- */
+  --sys-gray: light-dark(var(--apple-gray-light), var(--apple-gray-dark));
+  --sys-gray2: light-dark(var(--apple-gray2-light), var(--apple-gray2-dark));
+  --sys-gray3: light-dark(var(--apple-gray3-light), var(--apple-gray3-dark));
+  --sys-gray4: light-dark(var(--apple-gray4-light), var(--apple-gray4-dark));
+  --sys-gray5: light-dark(var(--apple-gray5-light), var(--apple-gray5-dark));
+  --sys-gray6: light-dark(var(--apple-gray6-light), var(--apple-gray6-dark));
+
+  /* ---- Surfaces & backgrounds ----
+     Default roles use the *grouped* set (this app is list/settings-centric):
+     a tinted canvas with white/elevated cards reads native on iOS, and the
+     dark grouped ramp lifts elevated surfaces lighter than the canvas. */
+  --color-bg: light-dark(var(--apple-grouped-1-light), var(--apple-grouped-1-dark)); /* canvas */
+  --color-bg-elevated: light-dark(
+    var(--apple-grouped-2-light),
+    var(--apple-grouped-2-dark)
+  ); /* cards, rows */
+  --color-bg-sunken: light-dark(
+    var(--apple-grouped-3-light),
+    var(--apple-grouped-3-dark)
+  ); /* wells, insets */
+
+  /* Plain (non-grouped) backgrounds, when a full-bleed surface is wanted. */
+  --color-bg-base: light-dark(var(--apple-bg-1-light), var(--apple-bg-1-dark));
+  --color-bg-secondary: light-dark(var(--apple-bg-2-light), var(--apple-bg-2-dark));
+  --color-bg-tertiary: light-dark(var(--apple-bg-3-light), var(--apple-bg-3-dark));
+
+  /* ---- Content (labels / text / icons) ---- */
+  --color-fg: light-dark(var(--apple-label-light), var(--apple-label-dark)); /* primary */
+  --color-fg-secondary: light-dark(
+    var(--apple-label2-light),
+    var(--apple-label2-dark)
+  ); /* subtitles */
+  --color-fg-tertiary: light-dark(var(--apple-label3-light), var(--apple-label3-dark)); /* hints */
+  --color-fg-quaternary: light-dark(
+    var(--apple-label4-light),
+    var(--apple-label4-dark)
+  ); /* disabled */
+  --color-placeholder: light-dark(var(--apple-placeholder-light), var(--apple-placeholder-dark));
+  --color-fg-on-accent: #fff; /* white text/icons atop a system-color fill */
+
+  /* ---- Fills (control/element backgrounds layered over content) ---- */
+  --color-fill: light-dark(var(--apple-fill1-light), var(--apple-fill1-dark));
+  --color-fill-secondary: light-dark(var(--apple-fill2-light), var(--apple-fill2-dark));
+  --color-fill-tertiary: light-dark(var(--apple-fill3-light), var(--apple-fill3-dark));
+  --color-fill-quaternary: light-dark(var(--apple-fill4-light), var(--apple-fill4-dark));
+
+  /* ---- Accent (interactive) — system blue by default ----
+     hover/press/subtle derive from the accent, so an accent theme only needs
+     to re-point `--color-accent` and the rest follows. */
+  --color-accent: var(--sys-blue);
+  --color-accent-hover: color-mix(in srgb, var(--color-accent) 88%, black);
+  --color-accent-press: color-mix(in srgb, var(--color-accent) 76%, black);
+  --color-accent-subtle: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  --color-link: light-dark(var(--apple-link-light), var(--apple-link-dark));
+
+  /* ---- Borders / separators ---- */
+  --color-separator: light-dark(var(--apple-separator-light), var(--apple-separator-dark));
+  --color-border: var(--color-separator);
+  --color-separator-opaque: light-dark(var(--apple-opaque-sep-light), var(--apple-opaque-sep-dark));
+
+  /* ---- Status ---- */
+  --color-success: var(--sys-green);
+  --color-warning: var(--sys-orange);
+  --color-danger: var(--sys-red);
+
+  /* ---- Component roles (fixed semantic meaning, theme-stable) ---- */
+  --color-pin: var(--sys-yellow); /* pinned items */
+  --color-flag: var(--sys-orange); /* flagged items */
+  --color-favorite: var(--sys-red); /* favorited / hearted items */
+
+  /* ---- MATERIALS — the signature translucent system surfaces ----
+     The four HIG thickness materials; each is a fill that adapts light/dark,
+     paired with a backdrop blur (the `.material-*` classes in theme.css do this).
+     Ultra-Thin → Thick = most see-through → most opaque.
+     https://developer.apple.com/design/human-interface-guidelines/materials */
+  --material-ultra-thin: light-dark(
+    var(--apple-mat-ultrathin-light),
+    var(--apple-mat-ultrathin-dark)
+  );
+  --material-thin: light-dark(var(--apple-mat-thin-light), var(--apple-mat-thin-dark));
+  --material-regular: light-dark(var(--apple-mat-regular-light), var(--apple-mat-regular-dark));
+  --material-thick: light-dark(var(--apple-mat-thick-light), var(--apple-mat-thick-dark));
+  /* Top hairline highlight that catches light on a glass edge. */
+  --material-border: light-dark(rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.12));
+
+  /* Back-compat: the old "glass" tokens now alias the Regular material. */
+  --surface-glass: var(--material-regular);
+  --surface-glass-thin: var(--material-thin);
+  --surface-glass-thick: var(--material-thick);
+  --surface-glass-blur: var(--blur-lg);
+  --surface-glass-border: var(--material-border);
+
+  /* ---- Shadows (subtle ambient; deepen in dark) ---- */
+  --shadow-sm: 0 1px 2px light-dark(rgb(0 0 0 / 0.06), rgb(0 0 0 / 0.4));
+  --shadow-md: 0 4px 12px light-dark(rgb(0 0 0 / 0.08), rgb(0 0 0 / 0.5));
+  --shadow-lg: 0 12px 32px light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.6));
+
+  /* ---- Semantic spacing/radius aliases (optional but tidy) ---- */
+  --gap-inline: var(--space-2);
+  --gap-stack: var(--space-4);
+  --pad-control: var(--space-3);
+  --radius-control: var(--radius-md);
+  --radius-card: var(--radius-xl);
+  --radius-sheet: var(--radius-2xl);
+}
+
+/* ============================================================
+   ACCENT THEMES — pick the tint color from the Apple system set.
+   The whole accent (hover/press/subtle/link-adjacent) follows because those
+   derive from `--color-accent`. Stack freely with light/dark.
+   ============================================================ */
+:root[data-accent="blue"] {
+  --color-accent: var(--sys-blue);
+}
+:root[data-accent="indigo"] {
+  --color-accent: var(--sys-indigo);
+}
+:root[data-accent="purple"] {
+  --color-accent: var(--sys-purple);
+}
+:root[data-accent="pink"] {
+  --color-accent: var(--sys-pink);
+}
+:root[data-accent="red"] {
+  --color-accent: var(--sys-red);
+}
+:root[data-accent="orange"] {
+  --color-accent: var(--sys-orange);
+}
+:root[data-accent="green"] {
+  --color-accent: var(--sys-green);
+}
+:root[data-accent="teal"] {
+  --color-accent: var(--sys-teal);
+}

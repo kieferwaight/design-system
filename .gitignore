@@ -1,0 +1,16 @@
+node_modules
+dist
+*.local
+.DS_Store
+
+# Local agent/editor settings (machine-specific, not for the public repo)
+.claude/settings.local.json
+
+# Storybook's debug log (written to cwd on failures)
+debug-storybook.log
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Generated API docs (typedoc)
+/docs

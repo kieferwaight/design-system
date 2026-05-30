@@ -1,0 +1,16 @@
+import { Meta, Source } from "@storybook/addon-docs/blocks";
+import spacingSrc from "./spacing.ts?raw";
+
+<Meta title="Foundations/Spacing/Overview" />
+
+# Spacing Foundation
+
+Spacing is built on a source-defined modular scale.
+
+In this design system, padding and margin are not separate token lists; instead, they are simply **spacing applied to specific box edges** (using Primitives like Box and Stack).
+
+## Spacing Scale
+
+The scale maps to standard `rem` units in CSS to guarantee continuous alignment with user-agent accessibility font-scaling adjustments.
+
+<Source code={spacingSrc} language="tsx" dark />

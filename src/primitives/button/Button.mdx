@@ -1,0 +1,54 @@
+import { Meta, Description, Canvas, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as Stories from "./Button.stories";
+import buttonSrc from "./Button.tsx?raw";
+
+<Meta of={Stories} />
+
+# Button Primitive
+
+<Description of={Stories} />
+
+The `Button` primitive is a highly responsive tap trigger wrapped in React Aria. It manages focus indicators, active scaling effects, variants, and pending loading states, aligned to standard token metrics.
+
+---
+
+## Live Playground
+
+<Canvas of={Stories.Default} />
+<Controls of={Stories.Default} />
+
+---
+
+## Key Scenarios
+
+### 1. Visual Variations
+
+Provides calibrated accent, secondary, border-separator outline, borderless tertiary, transparent ghost, and high-visibility danger/destructive configurations:
+
+<Canvas of={Stories.Variants} />
+
+### 2. Standard T-Shirt Scales
+
+Button height and padding scale seamlessly on the Spacing modular ladder, preserving proportion and layout rhythms:
+
+<Canvas of={Stories.Sizes} />
+
+### 3. Integrated Vector Icons
+
+Composes perfectly with our custom compile-time Vector SF `<Icon>` Primitive for clean action representations:
+
+<Canvas of={Stories.WithIcons} />
+
+### 4. Interactive States
+
+Supports full reactive scales for hovered, pressed, disabled, and full-width stretch fits:
+
+<Canvas of={Stories.States} />
+
+---
+
+## Source of Truth
+
+The complete implementation code for `Button`:
+
+<Source code={buttonSrc} language="tsx" dark />

@@ -1,0 +1,295 @@
+@import "tailwindcss";
+@import "./primitives.css"; /* Tier 1 — raw OKLCH scales, NEVER in @theme */
+@import "./semantic.css"; /* Tier 2 — :root + [data-theme] + [data-accent] re-points */
+
+/* ============================================================
+   TAILWIND BRIDGE — @theme inline.
+   `inline` is load-bearing: it makes Tailwind emit utilities as literal
+   `var(--color-*)` references instead of baking resolved values, so toggling
+   data-theme / data-accent on :root re-colors every utility at runtime.
+   Only SEMANTIC (Tier 2) tokens appear here — primitives stay out so no
+   `bg-neutral-500`-style utility can ever leak Tier 1 into a component.
+   ============================================================ */
+@theme inline {
+  /* ---- color (drives bg-*, text-*, border-*, ring-*, fill-*) ---- */
+  --color-bg: var(--color-bg);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-bg-sunken: var(--color-bg-sunken);
+  --color-bg-base: var(--color-bg-base);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-tertiary: var(--color-bg-tertiary);
+  --color-fg: var(--color-fg);
+  --color-fg-secondary: var(--color-fg-secondary);
+  --color-fg-tertiary: var(--color-fg-tertiary);
+  --color-fg-quaternary: var(--color-fg-quaternary);
+  --color-fg-on-accent: var(--color-fg-on-accent);
+  --color-placeholder: var(--color-placeholder);
+  --color-fill: var(--color-fill);
+  --color-fill-secondary: var(--color-fill-secondary);
+  --color-fill-tertiary: var(--color-fill-tertiary);
+  --color-fill-quaternary: var(--color-fill-quaternary);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-press: var(--color-accent-press);
+  --color-accent-subtle: var(--color-accent-subtle);
+  --color-link: var(--color-link);
+  --color-border: var(--color-border);
+  --color-separator: var(--color-separator);
+  --color-separator-opaque: var(--color-separator-opaque);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+  --color-pin: var(--color-pin);
+  --color-flag: var(--color-flag);
+  --color-favorite: var(--color-favorite);
+
+  /* ---- Apple system color palette (text-sys-blue, bg-sys-red, …) ---- */
+  --color-sys-red: var(--sys-red);
+  --color-sys-orange: var(--sys-orange);
+  --color-sys-yellow: var(--sys-yellow);
+  --color-sys-green: var(--sys-green);
+  --color-sys-mint: var(--sys-mint);
+  --color-sys-teal: var(--sys-teal);
+  --color-sys-cyan: var(--sys-cyan);
+  --color-sys-blue: var(--sys-blue);
+  --color-sys-indigo: var(--sys-indigo);
+  --color-sys-purple: var(--sys-purple);
+  --color-sys-pink: var(--sys-pink);
+  --color-sys-brown: var(--sys-brown);
+  --color-sys-gray: var(--sys-gray);
+  --color-sys-gray2: var(--sys-gray2);
+  --color-sys-gray3: var(--sys-gray3);
+  --color-sys-gray4: var(--sys-gray4);
+  --color-sys-gray5: var(--sys-gray5);
+  --color-sys-gray6: var(--sys-gray6);
+
+  /* ---- radii (rounded-*) ---- */
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+  --radius-full: var(--radius-full);
+
+  /* ---- layer radii (rounded-layer-0 … rounded-layer-6) — nested containers ---- */
+  --radius-layer-0: var(--radius-layer-0);
+  --radius-layer-1: var(--radius-layer-1);
+  --radius-layer-2: var(--radius-layer-2);
+  --radius-layer-3: var(--radius-layer-3);
+  --radius-layer-4: var(--radius-layer-4);
+  --radius-layer-5: var(--radius-layer-5);
+  --radius-layer-6: var(--radius-layer-6);
+
+  /* ---- glyph radii (rounded-glyph-xs … xl) — size-paired glyph boxes ---- */
+  --radius-glyph-xs: var(--radius-glyph-xs);
+  --radius-glyph-sm: var(--radius-glyph-sm);
+  --radius-glyph-md: var(--radius-glyph-md);
+  --radius-glyph-lg: var(--radius-glyph-lg);
+  --radius-glyph-xl: var(--radius-glyph-xl);
+
+  /* ---- shadows (shadow-*) — re-pointed in dark ---- */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  /* ---- fonts ---- */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* ---- type ramp — utility names kept; values point at the new ramp ----
+     line-heights stay tuned per step. */
+  --text-3xs: 0.625rem; /* 10 */
+  --text-3xs--line-height: 14px;
+  --text-2xs: var(--text-caption2); /* 11 */
+  --text-2xs--line-height: 14px;
+  --text-xs: var(--text-caption1); /* 12 */
+  --text-xs--line-height: 16px;
+  --text-sm: var(--text-footnote); /* 13 */
+  --text-sm--line-height: 18px;
+  --text-base: var(--text-subhead); /* 15 */
+  --text-base--line-height: 20px;
+  --text-callout: var(--text-callout); /* 16 */
+  --text-callout--line-height: 21px;
+  --text-lg: var(--text-body); /* 17 */
+  --text-lg--line-height: 22px;
+  --text-xl: var(--text-title3); /* 20 */
+  --text-xl--line-height: 25px;
+  --text-2xl: var(--text-title2); /* 22 */
+  --text-2xl--line-height: 28px;
+  --text-3xl: var(--text-title1); /* 28 */
+  --text-3xl--line-height: 34px;
+  --text-large-title: var(--text-large); /* 34 */
+  --text-large-title--line-height: 41px;
+}
+
+/* ============================================================
+   DEVICE BREAKPOINTS — the three target classes: ios, ipad, desktop.
+   Floors are the *minimum* width at which each larger class begins, so the
+   default (un-prefixed) styles are phone-first (ios) and you layer up:
+
+     <div class="ios-base ipad:px-6 desktop:max-w-5xl">     // and-up variants
+     <div class="ipad:block max-ipad:hidden">               // ipad-and-up / phone-only
+
+   These rem values are the SINGLE SOURCE OF TRUTH for the width thresholds and
+   MUST stay in sync with `BREAKPOINTS` in `src/foundations/device/device.ts` (the JS side).
+   ============================================================ */
+@theme {
+  --breakpoint-ipad: 48rem; /* 768px — iPad / tablet and up */
+  --breakpoint-desktop: 64rem; /* 1024px — desktop and up */
+}
+
+/* ---- Launch-mode variants — style by how the app was launched ----
+     pwa:pt-[env(safe-area-inset-top)]   // only when installed (standalone)
+     browser-tab:block                   // only in a normal browser tab
+   For broader "installed" detection (fullscreen / minimal-ui too) use the
+   JS-set [data-pwa] attribute instead. */
+@custom-variant pwa (@media (display-mode: standalone));
+@custom-variant browser-tab (@media (display-mode: browser));
+
+@layer base {
+  /* ---- Device data-attributes (set by applyDeviceAttributes / the React
+     decorator). Let CSS react to *capability*, not just width — things a media
+     query alone can't express. JS (useDeviceState) and these stay 1:1. ----
+       [data-device="ios|ipad|desktop"]   — capability-aware: real iPhone/iPad
+                                            pinned by UA (correct in any
+                                            orientation), else viewport width
+       [data-viewport="ios|ipad|desktop"] — pure width class (== Tailwind variants)
+       [data-touch]                       — coarse pointer / touchscreen
+       [data-standalone]                  — display-mode: standalone specifically
+       [data-pwa]                         — installed PWA (any non-browser display-mode)
+       [data-display-mode="standalone|fullscreen|minimal-ui|browser"]
+
+     `data-device` and the `ipad:`/`desktop:` width variants can intentionally
+     disagree — e.g. an iPad in landscape is [data-device="ipad"] yet matches
+     `desktop:` (≥1024px). Use whichever question you mean. */
+}
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--leading-normal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@layer components {
+  .skeleton {
+    background: var(--color-bg-sunken);
+    position: relative;
+    overflow: hidden;
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, var(--surface-glass-thin), transparent);
+    animation: shimmer 1.6s var(--ease-standard) infinite;
+  }
+
+  /* ---- MATERIALS — the four HIG thickness materials (Ultra-Thin → Thick) ----
+     Each is a translucent fill + backdrop blur + a hairline top highlight.
+     Use sparingly on moving elements (every active blur layer costs GPU).
+     Apple: https://developer.apple.com/design/human-interface-guidelines/materials */
+  .material-ultra-thin,
+  .material-thin,
+  .material-regular,
+  .material-thick {
+    border-top: 1px solid var(--material-border);
+    -webkit-backdrop-filter: blur(var(--_mat-blur)) saturate(180%);
+    backdrop-filter: blur(var(--_mat-blur)) saturate(180%);
+  }
+  .material-ultra-thin {
+    --_mat-blur: var(--blur-md);
+    background: var(--material-ultra-thin);
+  }
+  .material-thin {
+    --_mat-blur: var(--blur-lg);
+    background: var(--material-thin);
+  }
+  .material-regular {
+    --_mat-blur: var(--blur-lg);
+    background: var(--material-regular);
+  }
+  .material-thick {
+    --_mat-blur: var(--blur-xl);
+    background: var(--material-thick);
+  }
+
+  /* The signature iOS material: Regular by default. (Back-compat alias.) */
+  .glass {
+    background: var(--surface-glass);
+    -webkit-backdrop-filter: blur(var(--surface-glass-blur)) saturate(180%);
+    backdrop-filter: blur(var(--surface-glass-blur)) saturate(180%);
+    border-top: 1px solid var(--surface-glass-border);
+    border-radius: var(--radius-sheet);
+  }
+
+  .glass-strong {
+    background: var(--surface-glass-thick);
+    -webkit-backdrop-filter: blur(var(--blur-xl)) saturate(180%);
+    backdrop-filter: blur(var(--blur-xl)) saturate(180%);
+    border-top: 1px solid var(--surface-glass-border);
+  }
+
+  /* specular edge — a subtle top-edge highlight common to Apple glass */
+  .glass-specular {
+    position: relative;
+  }
+  .glass-specular::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      180deg,
+      var(--surface-glass-border),
+      oklch(1 0 0 / 0.02) 30%,
+      transparent
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}

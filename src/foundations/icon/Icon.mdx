@@ -1,0 +1,25 @@
+import { Meta, Source } from "@storybook/addon-docs/blocks";
+import iconSrc from "./icon.ts?raw";
+
+<Meta title="Foundations/Icon/Overview" />
+
+# Icon Foundation
+
+Icons are essential visual indicators. The system defines standard sizing tokens for icons that correspond directly to structural layout atoms (such as Avatars, Chips, or Swatches) to maintain cohesive alignment across interfaces.
+
+---
+
+## 1. Icon Sizes
+
+Icon sizes are mapped proportionally to their enclosing box elements. The source module is embedded here so the documented values always match the runtime tokens.
+
+<Source code={iconSrc} language="tsx" dark />
+
+---
+
+## 2. Platform Targets & Rendering
+
+- **SF Symbols (Primary target):** The iOS platform standard. Since SF Symbols cannot be web-embedded, our runtime engine renders symbol names dynamically via SVG masks using `mask-image` + `currentColor` to allow semantic color cascading.
+- **Prototypes (Lucide stand-ins):** For platform independence in pure web view contexts, we leverage Lucide React wrappers adhering to the same sizing contract.
+
+To render individual symbols or vector graphics from `/assets`, use the low-level primitive `<Icon>` component in `src/primitives/icon/`.

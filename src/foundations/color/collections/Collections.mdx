@@ -1,0 +1,52 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { externalCollections } from "./index";
+
+<Meta title="Foundations/Color/Collections/Overview" />
+
+# Color Collections
+
+Curated, **external** color palettes pulled from upstream npm providers and
+**normalized to our standard model** (`Palette` / `ColorToken` — see
+*Foundations/Color/Color Token*). Once normalized, every collection renders with
+the same `Swatch` components and carries `source` provenance (package, version,
+license, URL).
+
+These are reference/known palettes — tagged **`external`** so you can filter the
+sidebar to just upstream collections.
+
+## Available now
+
+<table>
+  <thead>
+    <tr>
+      <th>Collection</th>
+      <th>Package</th>
+      <th>Palettes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {externalCollections.map((collection) => (
+      <tr key={collection.id}>
+        <td><strong>{collection.name}</strong></td>
+        <td><code>{collection.source?.pkg}</code></td>
+        <td>{collection.palettes.map((palette) => palette.name).join(", ")}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+## Adding a provider
+
+1. `pnpm add <package>`.
+2. Add an adapter under `src/adapters/colors/<provider>/` that maps the
+   package's shape into a `PaletteCollection` of `Palette` / `AnsiPalette`
+   (normalize quirks there — e.g. Rosé Pine emits bare hex, so we prepend `#`).
+3. Import and register it in `collections/index.ts` (`externalCollections`).
+4. Add a `*.stories.tsx` page under `src/foundations/color/collections/` that renders its palettes with `Swatch`.
+
+## Distinct from our own system
+
+External collections are **static, imported data**. Our own color system is the
+**generative OKLCH** one (`Foundations/Color/Systems`, runtime-themed via CSS
+custom properties). Both speak the same `ColorToken` model, but only ours
+re-themes at runtime.

@@ -1,0 +1,22 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Dependencies/React Aria" />
+
+# React Aria
+
+**Why we depend on it:** React Aria (Adobe) provides the *behavior and accessibility*
+layer — keyboard interactions, focus management, ARIA semantics, pointer/press
+handling, collections (GridList, ListBox), selection — without imposing any styling.
+The Design Kit owns the look (Liquid Glass tokens + Motion); React Aria owns the
+correctness. This split is why our components are accessible by default.
+
+We use `react-aria-components` (the higher-level component API).
+
+## Links
+
+- Docs & component reference: <a href="https://react-aria.adobe.com" target="_blank">react-aria.adobe.com</a>
+- iOS swipe-list pattern we followed: <a href="https://react-aria.adobe.com/examples/ios-list" target="_blank">react-aria.adobe.com/examples/ios-list</a>
+- AI tooling (MCP server, used by this repo): <a href="https://react-aria.adobe.com/ai" target="_blank">react-aria.adobe.com/ai</a>
+
+*This page is documentation only — it points at the upstream hosted docs rather than
+re-hosting their Storybook.*

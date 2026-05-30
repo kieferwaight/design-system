@@ -1,0 +1,42 @@
+import { Meta, Description, Canvas, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as Stories from "./Grid.stories";
+import gridSrc from "./Grid.tsx?raw";
+
+<Meta of={Stories} />
+
+# Grid Primitive
+
+<Description of={Stories} />
+
+The `Grid` primitive is a structural CSS Grid layout container extending `Box`. It enables developers to implement multi-dimensional layout rows/columns with dynamic templates and spacing gaps.
+
+---
+
+## Live Playground
+
+<Canvas of={Stories.Default} />
+<Controls of={Stories.Default} />
+
+---
+
+## Key Scenarios
+
+### 1. Dynamic Auto-Fit Columns
+
+Using `cols="repeat(auto-fit, minmax(120px, 1fr))"`, the grid adapts automatically to container size, reflowing card layouts without requiring manual media query breaks:
+
+<Canvas of={Stories.CustomColumnsTemplate} />
+
+### 2. Differentiated Spacing Gaps
+
+Provides granular spacer controls to set separate vertical and horizontal distances using the `gapX` and `gapY` properties:
+
+<Canvas of={Stories.MixedGaps} />
+
+---
+
+## Source of Truth
+
+The complete implementation code for `Grid`:
+
+<Source code={gridSrc} language="tsx" dark />

@@ -1,0 +1,55 @@
+import { Meta, Source } from "@storybook/addon-docs/blocks";
+import { DEVICE_QUERY } from "./device";
+import deviceTypesSrc from "./device.types.ts?raw";
+
+<Meta title="Foundations/Device/Overview" />
+
+# Device Foundation
+
+The design system targets source-defined device classes for phone-first, tablet, and desktop layouts.
+
+To build fluid, hybrid, PWA-ready applications, the system separates **responsive width** from **physical hardware capabilities**:
+
+---
+
+## 1. Viewport Class (Responsive Layouts)
+
+The viewport class reflects the **current layout width** only. It determines how much horizontal room is available and mirrors the CSS breakpoints.
+
+<table>
+  <thead>
+    <tr>
+      <th>Viewport Class</th>
+      <th>Media Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Object.entries(DEVICE_QUERY).map(([device, query]) => (
+      <tr key={device}>
+        <td><code>{device}</code></td>
+        <td><code>{query}</code></td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+---
+
+## 2. Device Type (Hardware & Capabilities)
+
+The device type tracks **actual hardware capabilities**, irrespective of orientation. For example, a real iPad rotated horizontally is 1366px wide, but its input and behavioral profile is still touch-first. 
+
+We classify hardware statically at startup to enable high-fidelity touch interactions, notch-aware margins, and Apple Pay integrations:
+
+- **Touch Interaction:** coarseness of pointer, touch-start hooks (`isTouchDevice`)
+- **iOS/iPadOS User-Agent detection:** disambiguating iPadOS Safari (which requests Mac desktops) via touch-point thresholds.
+
+---
+
+## 3. Launch & Display Modes
+
+PWAs running as installed applications require different layouts (e.g. padding to avoid the iOS virtual home indicator) than browser tabs. The source type below is the canonical list of launch modes and runtime state fields.
+
+<Source code={deviceTypesSrc} language="tsx" dark />
+
+Using these definitions, the active runtime environment profile manager in `environments/` can seamlessly adapt layout structure and native gestures.

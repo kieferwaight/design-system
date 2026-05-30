@@ -1,0 +1,54 @@
+import { Meta, Description, Canvas, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as Stories from "./Box.stories";
+import boxSrc from "./Box.tsx?raw";
+
+<Meta of={Stories} />
+
+# Box Primitive
+
+<Description of={Stories} />
+
+The `Box` primitive serves as the universal bounding container. It abstracts low-level CSS layout and design tokens (spacing scales, altitudinal shadows, rounded layer corners, directional borders, and backdrop-filter glass blurs) into clean, type-safe React properties.
+
+---
+
+## Live Playground
+
+Toggle properties in the controls below to inspect visual results:
+
+<Canvas of={Stories.Default} />
+<Controls of={Stories.Default} />
+
+---
+
+## Key Features
+
+### 1. Concentric Corner Nesting
+
+When nesting containers, keeping the border-radius constant breaks optical concentricity, causing corners to "pinch" or clash. To keep layout corners concentric, we enforce:
+
+$$\text{inner-radius} = \text{outer-radius} - \text{gap}$$
+
+The `Box` primitive makes this automatic by mapping the `radius` prop to container concentric levels (`layer-0` through `layer-6`).
+
+<Canvas of={Stories.NestedConcentricRadii} />
+
+### 2. Altitudinal Shadows
+
+Represents physical elevation on the z-axis. The `shadow` prop resolves automatically to ambient dark/light calibrated layers (`sm`, `md`, `lg` depth levels).
+
+<Canvas of={Stories.ShadowDepths} />
+
+### 3. Glassmorphic Backdrop Blurs
+
+Blurs the content underneath the box using standard GPU-accelerated backdrop-filters, calibrated to standard t-shirt sizes:
+
+<Canvas of={Stories.BackdropBlurs} />
+
+---
+
+## Source of Truth
+
+The complete polymorphic implementation for `Box`:
+
+<Source code={boxSrc} language="tsx" dark />

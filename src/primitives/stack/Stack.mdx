@@ -1,0 +1,48 @@
+import { Meta, Description, Canvas, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as Stories from "./Stack.stories";
+import stackSrc from "./Stack.tsx?raw";
+
+<Meta of={Stories} />
+
+# Stack Primitive
+
+<Description of={Stories} />
+
+The `Stack` primitive is a high-performance, flexbox layout utility extending `Box`. It enables developers to structure linear layouts (rows or columns) with calibrated spacing gaps and alignment attributes.
+
+---
+
+## Live Playground
+
+<Canvas of={Stories.Default} />
+<Controls of={Stories.Default} />
+
+---
+
+## Key Scenarios
+
+### 1. Horizontal Flex Flows
+
+Organize elements side-by-side using `direction="horizontal"`. Perfect for navigation elements, toolbars, metadata groups, or action lists.
+
+<Canvas of={Stories.HorizontalRow} />
+
+### 2. Spacing Ladder Gaps
+
+Directly maps the `gap` prop to the 4px modular spacing scale (`space-1` to `space-9`), creating uniform, calibrated distance scales without manual margin paddings.
+
+<Canvas of={Stories.SpacingGaps} />
+
+### 3. Cross-Axis Alignment
+
+Calibrates cross-axis alignment (`start`, `center`, `end`, `stretch`, `baseline`) inside the flex engine:
+
+<Canvas of={Stories.CrossAxisAlignments} />
+
+---
+
+## Source of Truth
+
+The complete implementation code for `Stack`:
+
+<Source code={stackSrc} language="tsx" dark />

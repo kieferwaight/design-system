@@ -1,0 +1,56 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { MATERIAL_THICKNESSES, MATERIALS } from "./material";
+
+<Meta title="Foundations/Material/Overview" />
+
+# Material Foundation
+
+Apple's translucent system surfaces. A **material** is a blurred, adaptive fill that samples the content behind it — the reason toolbars, sheets, sidebars, and notification banners feel like they float *above* the page rather than sitting on a flat color.
+
+The design system defines materials by **thickness**, from most see-through to most opaque:
+
+<table>
+  <thead>
+    <tr>
+      <th>Material</th>
+      <th>Token / CSS class</th>
+      <th>Typical Use Cases</th>
+    </tr>
+  </thead>
+  <tbody>
+    {MATERIAL_THICKNESSES.map((thickness) => {
+      const material = MATERIALS[thickness];
+      return (
+        <tr key={thickness}>
+          <td><strong>{material.name}</strong></td>
+          <td><code>{material.token}</code> · <code>.{material.className}</code></td>
+          <td>{material.description}</td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+
+Each `.material-*` class applies three coordinated rules:
+1. An adaptive **translucent fill** (`--material-*` using `light-dark()` syntax).
+2. A matched **backdrop blur** (tied to the `--blur-*` elevation tiers).
+3. A hairline **top highlight** (`--material-border`) to catch light on the container's glass rim.
+
+```html
+<div class="material-thick">...toolbar content...</div>
+```
+
+---
+
+## Vibrancy & Foreground Contrast
+
+Content placed *on* a material should leverage the standard semantic foreground labels defined by the color foundation.
+
+These are pre-tuned to achieve AA/AAA contrast ratios when layered over the adaptive blurred backgrounds in both light and dark appearances.
+
+---
+
+## Performance Considerations
+
+> [!WARNING]
+> Because backdrop-filter blurring is GPU-heavy during transitions and scroll animations, use materials deliberately on macro floating containers rather than nesting them repeatedly.

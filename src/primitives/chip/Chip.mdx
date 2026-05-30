@@ -1,0 +1,54 @@
+import { Meta, Description, Canvas, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as Stories from "./Chip.stories";
+import chipSrc from "./Chip.tsx?raw";
+
+<Meta of={Stories} />
+
+# Chip Primitive
+
+<Description of={Stories} />
+
+The `Chip` primitive is a compact metadata capsule or filter tag. It enforces top-level visual domain classifications (`Kind` types), badge counts, and dismissible icons on standard spacer grids.
+
+---
+
+## Live Playground
+
+<Canvas of={Stories.Default} />
+<Controls of={Stories.Default} />
+
+---
+
+## Key Scenarios
+
+### 1. Classification Kinds
+
+Enforces app-wide visual consistency by looking up color tones and vector symbols automatically from the kind registry:
+
+<Canvas of={Stories.Kinds} />
+
+### 2. Layout Height Variations
+
+Sizes scale perfectly along the Spacing modular ladder, preserving proportion and line height:
+
+<Canvas of={Stories.Sizes} />
+
+### 3. Visual Styling Variations
+
+Supports default lookup kind theme, custom tinted overlays, outline borders, solid color fill accents, and muted background tags:
+
+<Canvas of={Stories.Variants} />
+
+### 4. Custom Trailing Triggers
+
+Allows trailing interactive slots, such as closing `xmark` indicators for tag dismissals:
+
+<Canvas of={Stories.InteractiveDismiss} />
+
+---
+
+## Source of Truth
+
+The complete implementation code for `Chip`:
+
+<Source code={chipSrc} language="tsx" dark />

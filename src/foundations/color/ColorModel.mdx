@@ -1,0 +1,41 @@
+import { Meta, Source } from "@storybook/addon-docs/blocks";
+import colorTypesSrc from "./color.types.ts?raw";
+import colorValueSrc from "./color-value.ts?raw";
+
+<Meta title="Foundations/Color/Color Token" />
+
+# Color Token & the color model
+
+The standardized TypeScript model every palette — ours or external — is
+normalized into. It's the **catalog / normalization / tooling** layer: it powers
+the docs, the Collections, contrast checks, and the future color-picker and
+syntax-highlighting work. It is **not** the runtime theming mechanism (that stays
+CSS custom properties + OKLCH-generative; `design/tokens.ts` keeps mirroring the
+live vars).
+
+## The layers
+
+- **`ColorToken`** — the atom: a named color whose source of truth is its
+  canonical CSS string `value` (hex for external palettes, `oklch()`/`var(--…)`
+  for ours). `hex`/`rgb` are precomputed when the source provides them.
+- **`Palette`** — an ordered set of tokens, with optional `appearance` and
+  `source` provenance. `type` discriminates `generic | ansi | design-kit | highlight`.
+- **`AnsiPalette`** — a concrete semantic subtype: the rigid 16-color ANSI
+  structure (8 colors × normal/bright). Used by terminal/code rendering.
+- **`PaletteCollection`** — a provider's full offering (e.g. Catppuccin = 4 flavors).
+
+> Why `value` (a CSS string) and not RGBA as the source of truth? Our system is
+> OKLCH-native and CSS-driven; external palettes are hex. A canonical string drops
+> straight into `<Swatch>` and CSS, and conversions (RGB/OKLCH/contrast) are
+> derived on demand via `ColorValue`.
+
+## `color.types.ts`
+
+<Source code={colorTypesSrc} language="tsx" dark />
+
+## `color-value.ts` — the culori-backed conversion util
+
+`ColorValue` is the only place [culori](https://culorijs.org) is touched. It
+yields hex / rgba / OKLCH and WCAG contrast for any CSS color string.
+
+<Source code={colorValueSrc} language="tsx" dark />

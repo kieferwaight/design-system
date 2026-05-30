@@ -1,0 +1,202 @@
+
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Overview" />
+
+# Design System Catalog
+
+This Storybook is the interactive catalog for the internal React design system. It documents the source model, runtime targets, UI layers, token systems, adapter boundaries, and composed examples used to build project interfaces.
+
+The design system is being organized as an ESM-first React package. Its primary purpose is to provide reusable foundations, primitives, components, adaptive patterns, and environment-aware behavior for iOS PWA and desktop-capable web applications.
+
+## Runtime Targets
+
+The design system is optimized for these targets, in order:
+
+1. **iOS PWA applications served over Tailscale**
+   - single-screen mobile flows
+   - safe-area and notch-aware layouts
+   - Safari browser chrome awareness
+   - installed PWA launch mode behavior
+   - local asset caching, workers, and touch-first interaction
+
+2. **Desktop-capable web applications**
+   - wide responsive layouts
+   - persistent navigation surfaces
+   - left and right sidebar patterns
+   - keyboard, pointer, hover, and multi-pane workflows
+
+## Architecture Flow
+
+The catalog is organized around a layered design-system model:
+
+```text
+Foundations
+  -> Adapters
+  -> Primitives
+  -> Components
+  -> Patterns
+  -> Environments
+  -> Examples
+```
+
+Each layer has a distinct role. Start at the top when reviewing core design contracts. Move downward when reviewing concrete UI behavior.
+
+| Layer | Purpose | Use this section to review |
+| --- | --- | --- |
+| **Foundations** | Data, tokens, models, and type contracts. | Color, typography, spacing, radius, elevation, motion, icon, material, and device contracts. |
+| **Adapters** | Normalized wrappers around external libraries and provider data. | Palette providers, icon providers, motion libraries, gesture systems, and accessibility integrations. |
+| **Primitives** | Low-level React UI bindings over foundations and adapters. | Box, stack, grid, surface, text, icon, button, input, and other base UI building blocks. |
+| **Components** | Reusable interface pieces composed from primitives. | Navigation, data display, forms, feedback, surfaces, overlays, and reusable layout components. |
+| **Patterns** | Adaptive layout and interaction systems composed from components. | Navigation stacks, split views, sidebar layouts, inspector panels, and adaptive shells. |
+| **Environments** | Runtime profiles for iOS, iPad, desktop, PWA, and browser contexts. | Device classification, viewport state, launch mode, safe areas, browser chrome, PWA support, and capability profiles. |
+| **Examples** | Complete workflows, mocks, and Storybook integration demos. | End-to-end views, scenario fixtures, workflow demos, and integration behavior. |
+
+## Navigation Guide
+
+### Start with Foundations
+
+Use **Foundations** to understand the design data that every other layer consumes.
+
+Foundations should answer:
+
+- What tokens exist?
+- What type contracts define the system?
+- What values are source-of-truth?
+- What values are generated from source data?
+- What device, color, typography, spacing, radius, elevation, motion, icon, and material models exist?
+
+Foundation stories should be code-driven and token-driven. They should explain the source data rather than act as visual-only showcases.
+
+### Then Review Adapters
+
+Use **Adapters** to understand how external packages are normalized before entering the design system.
+
+Adapters should answer:
+
+- Which external providers are supported?
+- What provider data is normalized?
+- What interface does the rest of the design system consume?
+- Where does provider-specific behavior stop?
+
+Provider-specific names should generally terminate at the adapter boundary unless intentionally exposed.
+
+### Then Review Primitives
+
+Use **Primitives** to inspect the smallest reusable React UI bindings.
+
+Primitives should answer:
+
+- How do tokens become UI?
+- How are base layout, text, surface, icon, and input behaviors expressed?
+- Which props are stable enough to compose into components?
+
+Primitives should remain small, composable, and product-neutral.
+
+### Then Review Components
+
+Use **Components** to inspect reusable interface parts built from primitives.
+
+Components should answer:
+
+- What reusable UI pieces are available?
+- What states, variants, and accessibility behaviors are supported?
+- Which props are part of the public component API?
+
+Components should be reusable across products and should not depend on mock workflow data.
+
+### Then Review Patterns
+
+Use **Patterns** to inspect larger adaptive behaviors.
+
+Patterns should answer:
+
+- How does navigation change across iOS, iPad, and desktop?
+- When does a push stack become a split view?
+- When does a sidebar become persistent?
+- How do inspectors, sheets, panels, and adaptive shells behave?
+
+Patterns are larger than components but still product-neutral.
+
+### Then Review Environments
+
+Use **Environments** to inspect runtime resolution.
+
+Environments should answer:
+
+- What device is this?
+- What viewport class is active?
+- Is the app running in browser, standalone, or PWA mode?
+- What safe-area values are active?
+- Is touch, hover, keyboard, worker, push, or offline cache supported?
+- Which layout and navigation profile should be active?
+
+Environment logic should resolve runtime context into a profile that patterns and components can consume.
+
+### Finally Review Examples
+
+Use **Examples** to inspect complete workflows, mocks, and integration scenarios.
+
+Examples should answer:
+
+- How do foundations, adapters, primitives, components, patterns, and environments work together?
+- What does a complete view look like?
+- What integration behavior should remain stable?
+- What mock data supports workflow-level testing?
+
+Examples belong outside package source and should not be imported by production design-system code.
+
+## Current Catalog Sections
+
+The current implementation is still being migrated. Some section names may reflect earlier prototypes while the target architecture is being applied.
+
+| Current Section | Target Meaning |
+| --- | --- |
+| **Foundations** | Source design data, tokens, models, and contracts. |
+| **Dependencies** | Transitional location for adapter documentation; target is **Adapters**. |
+| **Components** | Reusable UI pieces; will be split into primitives, components, and patterns where needed. |
+| **Layouts** | Transitional location for layout primitives and adaptive patterns. |
+| **Platforms** | Transitional location for runtime targets; target is **Environments**. |
+| **Lab** | Active experiments. May import stable layers, but stable layers should not import Lab. |
+| **Archive** | Old prototypes kept only as reference material. Do not use as production source. |
+
+## Status Tags
+
+Stories use tags to describe maturity and review state.
+
+| Tag | Meaning |
+| --- | --- |
+| `stable` | Production-ready; API is expected to remain compatible. |
+| `experimental` | Usable, but API or implementation may change. |
+| `research` | Exploratory work, usually associated with Lab. |
+| `deprecated` | Superseded; retained for reference. |
+| `external` | Upstream or third-party data normalized into this system. |
+| `migration` | Transitional implementation being moved into the target architecture. |
+
+## Source Boundaries
+
+Use these boundaries when contributing or reviewing code:
+
+- `foundations/` owns source design contracts.
+- `adapters/` owns external provider normalization.
+- `primitives/` owns low-level React bindings.
+- `components/` owns reusable interface pieces.
+- `patterns/` owns adaptive composition behavior.
+- `environments/` owns runtime context resolution.
+- `examples/` owns complete workflows and mocks.
+- `lab/` owns unstable experiments.
+- `archive/` is reference-only and should not be imported into package source.
+
+## Review Path
+
+For a new system or feature, review in this order:
+
+1. **Foundation contract** — token, type, model, or data source.
+2. **Adapter boundary** — external provider normalization, if applicable.
+3. **Primitive binding** — low-level React expression of the contract.
+4. **Component API** — reusable interface behavior and props.
+5. **Pattern behavior** — adaptive layout or interaction rules.
+6. **Environment behavior** — iOS, iPad, desktop, browser, or PWA differences.
+7. **Example workflow** — complete integration scenario using mock data.
+
+This order keeps design data stable, UI composition predictable, and environment-specific behavior isolated.

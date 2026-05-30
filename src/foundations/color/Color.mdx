@@ -1,0 +1,75 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Color/Overview" />
+
+# Color
+
+Color is built in layers — each one composes the layer below it.
+
+```
+Color Token  →  Swatch  →  Palette  →  Base Color System  →  Generative System
+```
+
+- **Color Token** — the atom: one value (an OKLCH/CSS custom property), e.g. `--accent-500`.
+- **Swatch** — the visual display of a single token. The display/styling is a *component*,
+  not a token, so it lives at **Components/Swatch** (built on **Components/Shape**); this
+  page owns only the token definitions.
+- **Palette** — an ordered set of swatches (a scale, or a curated collection).
+- **Base Color System** — palettes mapped to **semantic roles** (`bg`, `fg`, `accent`,
+  `border`, status…) so components stay theme-agnostic.
+- **Generative System** — a base system whose tokens are **algorithmically derived**.
+  Our first is **Liquid Glass**.
+
+## The Apple ecosystem
+
+Core and accent follow the [Apple Human Interface Guidelines color
+system](https://developer.apple.com/design/human-interface-guidelines/color). The
+literal light/dark values live as Tier-1 constants (`--apple-*`); the semantic tier
+exposes them as dynamic tokens that switch per appearance.
+
+- **Core**
+  - **System Grays** — the source-defined structural neutral scale.
+  - **Semantic roles** — source-defined dynamic backgrounds, foreground labels,
+    fills, and separators. These are what components reference.
+  - **Materials** *(new)* — the source-defined HIG thickness materials.
+    See **Color/Materials**.
+- **Accent** — the source-defined **system colors**. Switch `--color-accent` from the Accent toolbar, and
+  hover/press/subtle derive from it automatically.
+
+## Dark Mode
+
+Every dynamic token is defined once with the CSS
+[`light-dark()`](https://developer.apple.com/design/human-interface-guidelines/dark-mode)
+function — two values, resolved by the `color-scheme` property that `theme.css`
+sets from `data-theme` (or the OS when unset). No duplicated dark blocks. Dark
+mode follows Apple's pattern: a black base canvas, **elevated** surfaces stepping
+*lighter* (the grouped background ramp), and system colors shifting to their
+brighter dark variants. Source: `src/design/primitives.css` (the `--apple-*`
+constants) and `src/design/semantic.css` (the role mapping).
+
+## Increased Contrast
+
+Apple ships a higher-contrast value for every system color and gray (the
+**Increase Contrast** accessibility setting). Those are wired to
+`@media (prefers-contrast: more)`, which re-points the raw `--apple-*` constants —
+so every `--sys-*` / `--color-*` token sharpens automatically, composing with
+light/dark. The **Palette → System Colors / Grays** stories list all four
+appearances (Default + Increased Contrast, each light + dark).
+
+The OKLCH generative scales (`--neutral-*`, `--accent-*`) remain in
+`primitives.css` for the forthcoming **Liquid Glass** generative track; the active
+core/accent system is now the Apple set above.
+
+## The TypeScript model
+
+The atoms above are formalized as TypeScript — `ColorToken`, `Palette`,
+`AnsiPalette`, `PaletteCollection` — in **Foundations/Color/Color Token**. Every
+palette (ours or external) normalizes into that shape, and `ColorValue` (culori)
+handles hex/rgb/OKLCH/contrast conversions.
+
+## Collections
+
+- **External palettes** *(live)* — curated upstream sets normalized to our model under
+  **Color/Collections**. The collection registry drives the available-provider table there.
+  Tagged `external`.
+- **Generative Systems** *(stub)* — algorithmic systems like **Liquid Glass**.
