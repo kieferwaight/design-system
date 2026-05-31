@@ -1,4 +1,20 @@
-# Walkthrough — Unified Input Primitives & Domain-Neutral Component Migrations
+# Phase 5 — Unified Input Primitives & Domain-Neutral Component Migrations: Implementation Report
+
+| | |
+|---|---|
+| **Report type** | Implementation report |
+| **Task / spec** | [DesignSystemFolderRefactor.md](/Users/kwaight/src/ai-conversations/web/todo/DesignSystemFolderRefactor.md) |
+| **Phase** | Phase 5 |
+| **Status** | Complete |
+| **Author** | Developer agent |
+| **Date** | 2026-05-30 |
+| **Branch / PR** | `main` |
+| **Progress log** | [refactor-changelog-notes.md](/Users/kwaight/src/ai-conversations/web/refactor-changelog-notes.md) (Phase 5) |
+| **Validation** | typecheck ✓ 0 errors · Biome ✓ 0 warnings (133 files) |
+
+---
+
+## Walkthrough — Unified Input Primitives & Domain-Neutral Component Migrations
 
 We have successfully completed **Phase 5 of the design system refactor**, implementing a new suite of interactive **Input Primitives** and reorganizing/migrating the remaining legacy components from `archive/` into structured domain folders under `src/components/`.
 

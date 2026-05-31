@@ -1,4 +1,20 @@
-# Walkthrough — Refactoring Foundations & Migrating Primitives
+# Phases 3, 4, 12 & 5 — Foundations, Color Adapters, Icon & Primitive Migration: Implementation Report
+
+| | |
+|---|---|
+| **Report type** | Implementation report |
+| **Task / spec** | [DesignSystemFolderRefactor.md](/Users/kwaight/src/ai-conversations/web/todo/DesignSystemFolderRefactor.md) |
+| **Phase** | Phases 3, 4, 12 & 5 |
+| **Status** | Complete |
+| **Author** | Developer agent |
+| **Date** | 2026-05-30 |
+| **Branch / PR** | `main` |
+| **Progress log** | [refactor-changelog-notes.md](/Users/kwaight/src/ai-conversations/web/refactor-changelog-notes.md) (Phases 3, 4, 12, 5) |
+| **Validation** | typecheck ✓ 0 errors · Biome ✓ clean (`src/primitives`) |
+
+---
+
+## Walkthrough — Refactoring Foundations & Migrating Primitives
 
 We have successfully completed **Phase 3 & 4 (Foundations and Color Adapters)**, **Phase 12 (Vector Icon Primitive)**, and **Phase 5: Rebuild & Migrate Layout/UI Primitives - Option A**. 
 
