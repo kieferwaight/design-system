@@ -1,75 +1,267 @@
-import { Meta } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+
+import * as ColorStories from "./Color.stories";
+import { oklchGenerativeScales } from "./color";
 
 <Meta title="Foundations/Color/Overview" />
 
 # Color
 
-Color is built in layers — each one composes the layer below it.
+Color is built in layers. Each layer composes the layer below it, so design
+tokens, semantic roles, palettes, themes, and generative systems can evolve
+independently — change one without rewriting the rest.
 
-```
-Color Token  →  Swatch  →  Palette  →  Base Color System  →  Generative System
-```
+<Canvas of={ColorStories.DemoLayerDiagram} meta={ColorStories} />
 
-- **Color Token** — the atom: one value (an OKLCH/CSS custom property), e.g. `--accent-500`.
-- **Swatch** — the visual display of a single token. The display/styling is a *component*,
-  not a token, so it lives at **Components/Swatch** (built on **Components/Shape**); this
-  page owns only the token definitions.
-- **Palette** — an ordered set of swatches (a scale, or a curated collection).
-- **Base Color System** — palettes mapped to **semantic roles** (`bg`, `fg`, `accent`,
-  `border`, status…) so components stay theme-agnostic.
-- **Generative System** — a base system whose tokens are **algorithmically derived**.
-  Our first is **Liquid Glass**.
+A single **Color Token** becomes a **Swatch**, swatches group into a **Palette**,
+palettes assemble into a **Base Color System**, and a **Generative System** turns
+a handful of seeds into all of it at once.
 
-## The Apple ecosystem
+---
 
-Core and accent follow the [Apple Human Interface Guidelines color
-system](https://developer.apple.com/design/human-interface-guidelines/color). The
-literal light/dark values live as Tier-1 constants (`--apple-*`); the semantic tier
-exposes them as dynamic tokens that switch per appearance.
+## The Apple Ecosystem
 
-- **Core**
-  - **System Grays** — the source-defined structural neutral scale.
-  - **Semantic roles** — source-defined dynamic backgrounds, foreground labels,
-    fills, and separators. These are what components reference.
-  - **Materials** *(new)* — the source-defined HIG thickness materials.
-    See **Color/Materials**.
-- **Accent** — the source-defined **system colors**. Switch `--color-accent` from the Accent toolbar, and
-  hover/press/subtle derive from it automatically.
+The design system adopts [Apple's color
+architecture](https://developer.apple.com/design/human-interface-guidelines/color)
+as its foundation. Apple provides a complete, battle-tested visual language —
+system colors, system grays, dynamic labels, backgrounds, fills, separators,
+materials, and accessibility variants. These primitives are the bedrock that
+semantic tokens and generated themes are built upon.
 
-## Dark Mode
+### Core Colors
 
-Every dynamic token is defined once with the CSS
-[`light-dark()`](https://developer.apple.com/design/human-interface-guidelines/dark-mode)
-function — two values, resolved by the `color-scheme` property that `theme.css`
-sets from `data-theme` (or the OS when unset). No duplicated dark blocks. Dark
-mode follows Apple's pattern: a black base canvas, **elevated** surfaces stepping
-*lighter* (the grouped background ramp), and system colors shifting to their
-brighter dark variants. Source: `src/design/primitives.css` (the `--apple-*`
-constants) and `src/design/semantic.css` (the role mapping).
+The neutral foundation: Apple's six system grays, from the lightest surface
+(Gray 6) through to the strongest (Gray 1).
 
-## Increased Contrast
+<Canvas of={ColorStories.DemoGrayGradient} meta={ColorStories} />
 
-Apple ships a higher-contrast value for every system color and gray (the
-**Increase Contrast** accessibility setting). Those are wired to
-`@media (prefers-contrast: more)`, which re-points the raw `--apple-*` constants —
-so every `--sys-*` / `--color-*` token sharpens automatically, composing with
-light/dark. The **Palette → System Colors / Grays** stories list all four
-appearances (Default + Increased Contrast, each light + dark).
+Grouped backgrounds give an interface depth without a single line — canvas,
+elevated surface, and modal each sit one step above the last.
 
-The OKLCH generative scales (`--neutral-*`, `--accent-*`) remain in
-`primitives.css` for the forthcoming **Liquid Glass** generative track; the active
-core/accent system is now the Apple set above.
+<Canvas of={ColorStories.DemoElevatedSurfaces} meta={ColorStories} />
 
-## The TypeScript model
+### Accent Colors
 
-The atoms above are formalized as TypeScript — `ColorToken`, `Palette`,
-`AnsiPalette`, `PaletteCollection` — in **Foundations/Color/Color Token**. Every
-palette (ours or external) normalizes into that shape, and `ColorValue` (culori)
-handles hex/rgb/OKLCH/contrast conversions.
+Twelve harmonious system hues form the expressive layer of the palette.
 
-## Collections
+<Canvas of={ColorStories.DemoSystemAccents} meta={ColorStories} />
 
-- **External palettes** *(live)* — curated upstream sets normalized to our model under
-  **Color/Collections**. The collection registry drives the available-provider table there.
-  Tagged `external`.
-- **Generative Systems** *(stub)* — algorithmic systems like **Liquid Glass**.
+Any one of them drops into the interface's interactive roles — buttons, links,
+badges, focus rings, and selected navigation.
+
+<Canvas of={ColorStories.DemoAccentInUse} meta={ColorStories} />
+
+### Materials
+
+Translucent "glass" materials layer content over content. Placed over a
+colorful field, the four thicknesses reveal how much they let through.
+
+<Canvas of={ColorStories.DemoMaterials} meta={ColorStories} />
+
+### Accessibility
+
+Every primitive ships a paired increased-contrast variant. The same card,
+default on the left and increased on the right — labels, separators, and
+controls all step up in legibility.
+
+<Canvas of={ColorStories.DemoAccessibility} meta={ColorStories} />
+
+---
+
+## OKLCH Generative Color System
+
+The Apple primitives give a fixed color language. The **OKLCH Generative Color
+System** extends that foundation by creating entire color families from a small
+number of inputs. Instead of defining hundreds of colors by hand, a few seed
+values generate complete, perceptually balanced scales.
+
+### What Is Generated?
+
+Two primary families come out of the engine.
+
+**Neutral Scale** — surfaces, elevation, borders, typography, shadows, and the
+structural hierarchy of the UI.
+
+<Canvas of={ColorStories.DemoNeutralRamp} meta={ColorStories} />
+
+**Accent Scale** — interactive controls, brand color, focus states, charts,
+data visualization, and status.
+
+<Canvas of={ColorStories.DemoAccentRamp} meta={ColorStories} />
+
+### Seed-Driven Design
+
+The entire system originates from three values. Adjust these and every derived
+token regenerates.
+
+<table>
+  <thead>
+    <tr>
+      <th>Seed</th>
+      <th>Default</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>neutralH</code></td>
+      <td><code>{oklchGenerativeScales.seeds.neutralH}°</code></td>
+      <td>Neutral Scale — cool gray surfaces, borders, typography, and elevation.</td>
+    </tr>
+    <tr>
+      <td><code>accentH</code></td>
+      <td><code>{oklchGenerativeScales.seeds.accentH}°</code></td>
+      <td>Accent Scale — interactive color, branding, focus, charts, and data viz.</td>
+    </tr>
+    <tr>
+      <td><code>accentC</code></td>
+      <td><code>{oklchGenerativeScales.seeds.accentC}</code></td>
+      <td>Accent Chroma — how muted, balanced, or vibrant the accent reads.</td>
+    </tr>
+  </tbody>
+</table>
+
+<Canvas of={ColorStories.DemoSeedControls} meta={ColorStories} />
+> Try it live in **[Foundations / Color / Systems →
+> Playground](?path=/story/foundations-color-systems--playground)** — drag the
+> three seeds and watch every ramp regenerate.
+
+---
+
+## Lightness
+
+Lightness controls perceived brightness — and with it, surface hierarchy,
+elevation, readability, and visual weight.
+
+<Canvas of={ColorStories.DemoLightnessStack} meta={ColorStories} />
+
+### Why It Matters
+
+A user should grasp hierarchy instantly, without reading. Lightness alone is
+enough to separate every plane of an interface.
+
+<Canvas of={ColorStories.DemoMockApp} meta={ColorStories} />
+
+---
+
+## Chroma
+
+Chroma controls color intensity. Higher chroma reads stronger; lower chroma
+reads softer. The same layout, same hue — only the chroma changes.
+
+<Canvas of={ColorStories.DemoChromaVariants} meta={ColorStories} />
+
+### Why It Matters
+
+Different products want different personalities. Enterprise software favors
+restrained chroma; consumer products lean stronger; brand experiences can push
+it all the way to expressive. One seed covers the whole range.
+
+---
+
+## Hue
+
+Hue determines the color family. The accent scale below is generated by
+identical logic six times over — only the hue seed differs.
+
+<Canvas of={ColorStories.DemoHueFamilies} meta={ColorStories} />
+
+### Why It Matters
+
+A design system can serve multiple brands without touching component code. Only
+the seed changes.
+
+---
+
+## Neutral Scale
+
+The Neutral Scale generates the structural colors of the interface.
+
+<Canvas of={ColorStories.DemoNeutralSwatches} meta={ColorStories} />
+
+### Surface Hierarchy
+
+<Canvas of={ColorStories.DemoSurfaceHierarchy} meta={ColorStories} />
+
+### Typography Hierarchy
+
+<Canvas of={ColorStories.DemoTypographyHierarchy} meta={ColorStories} />
+
+### Perceptual Color Behavior
+
+The Neutral Scale is not linear — it is tuned to how humans actually perceive
+color.
+
+**Chroma distribution.** A touch of chroma peaks near the middle of the scale
+and falls toward both ends, so mid-tones feel alive while the extremes stay
+clean.
+
+<Canvas of={ColorStories.DemoNeutralChromaCurve} meta={ColorStories} />
+
+**Hue drift.** Subtle hue shifts across the ramp create depth. The interface
+feels more natural while still reading as neutral.
+
+<Canvas of={ColorStories.DemoHueDriftCompare} meta={ColorStories} />
+
+---
+
+## Accent Scale
+
+The Accent Scale generates interaction colors.
+
+<Canvas of={ColorStories.DemoAccentSwatches} meta={ColorStories} />
+
+### Perceptual Saturation Curve
+
+The scale intentionally grows richer before it grows darker — chroma follows a
+bell curve, matching the expectation that color deepens before it dims.
+
+<Canvas of={ColorStories.DemoAccentChromaCurve} meta={ColorStories} />
+
+### Hue Drift
+
+Accent colors shift subtly as they darken, moving from a cyan-leaning blue in
+the light end toward an indigo-leaning blue in the dark end. The family gains
+depth while staying recognizably one color.
+
+<Canvas of={ColorStories.DemoAccentHueDrift} meta={ColorStories} />
+
+---
+
+## Theme Generation
+
+A complete theme can be generated from a small number of inputs. Identical UI —
+only the generated color seeds differ.
+
+<Canvas of={ColorStories.DemoThemeGeneration} meta={ColorStories} />
+
+### Why It Matters
+
+A product can support brand themes, customer themes, white-label deployments,
+and per-user personalization — all without rewriting components.
+
+---
+
+## Data Visualization
+
+The same generator produces chart-safe palettes. Because every family follows
+the same perceptual rules, data colors stay balanced against one another.
+
+<Canvas of={ColorStories.DemoDataVizRamps} meta={ColorStories} />
+
+
+---
+
+## Future Systems
+
+The OKLCH engine is designed to power systems beyond Apple. The implementation
+changes; the color model stays the same.
+
+<Canvas of={ColorStories.DemoFutureSystems} meta={ColorStories} />
+
+---
+
+## Architectural Benefits
+
+<Canvas of={ColorStories.ArchitecturalBenefits} meta={ColorStories} />
+

@@ -1,5 +1,5 @@
 import { converter, formatHex, formatRgb, parse, wcagContrast } from "culori";
-import type { RGBA } from "./color.types";
+import type { RGBA } from "../src/foundations/color/color.types";
 
 /**
  * The single place culori is touched. Wraps a CSS color string in lazy accessors

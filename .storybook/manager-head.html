@@ -1,38 +1,4 @@
 <!-- Manager-chrome overrides — keep in sync with .storybook/theme.ts -->
 <style>
-  /* Hide scrollbars across the manager (sidebar, addon panel) — keep scrolling. */
-  *::-webkit-scrollbar {
-    width: 0 !important;
-    height: 0 !important;
-    display: none !important;
-  }
-  * {
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
-  /* Toast / notification surfaces. The manager theme already tints these
-     Macchiato; this gives them the same rounded, bordered, elevated card
-     treatment as the docs tables and code blocks. */
-  #storybook-checklist-widget,
-  [class*="sidebar"] [class*="notification"],
-  [class*="Notification"] {
-    background: #1e2030 !important; /* mantle — one step up from the app bg */
-    border: 1px solid #494d64 !important; /* surface1 */
-    border-radius: 12px !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
-    overflow: hidden;
-  }
-
-  /* Links / buttons inside toasts lean on the mauve accent. */
-  #storybook-checklist-widget a,
-  #storybook-checklist-widget button {
-    color: #c6a0f6 !important; /* mauve */
-  }
-
-  /* The onboarding widget's glow ring is a rainbow gradient on the parent's
-     ::before. Retint it to the brand peach → pink → mauve so it matches the H1
-     gradient instead of clashing. */
-  :has(> #storybook-checklist-widget)::before {
-    background: linear-gradient(45deg, #f5a97f, #f5bde6, #c6a0f6) !important;
-  }
+ 
 </style>

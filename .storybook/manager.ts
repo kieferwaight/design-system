@@ -1,4 +1,4 @@
 import { addons } from "storybook/manager-api";
-import { designKitTheme } from "./theme";
+import { themes } from "storybook/theming";
 
-addons.setConfig({ theme: designKitTheme });
+addons.setConfig({ theme: themes.light });

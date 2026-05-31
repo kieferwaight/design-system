@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "sb:restart",
+			"problemMatcher": [],
+			"label": "npm: sb:restart",
+			"detail": "bash scripts/dev.sh restart"
+		}
+	]
+}

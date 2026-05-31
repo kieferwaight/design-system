@@ -99,6 +99,7 @@ export interface OklchRung {
   rung: number;
   lightness: number;
   chroma: number | string;
+  hueShift: number;
 }
 
 /** OKLCH generative definitions. */

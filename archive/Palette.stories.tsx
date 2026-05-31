@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { CSSProperties } from "react";
-import { accentThemes, applePrimitives, semanticRoles } from "./color";
-import type { ContrastSensitiveValue } from "./color.types";
+import { accentThemes, applePrimitives, semanticRoles } from "../src/foundations/color/color";
+import type { ContrastSensitiveValue } from "../src/foundations/color/color.types";
 
 /**
  * Palette — the Apple ecosystem color system. Core (system colors, grays, and
